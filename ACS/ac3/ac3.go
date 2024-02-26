@@ -58,22 +58,22 @@ func main() {
 
         switch opcao {
         case 1:
-			if listaContatos[4] == nil {
-				var nome, email string
-				fmt.Print("Digite o nome do contato: ")
-				fmt.Scanln(&nome)
-				fmt.Print("Digite o e-mail do contato: ")
-				fmt.Scanln(&email)
-
-				novoContato := &Contato{
-					nome:  nome,
-					email: email,
-				}
-
-				adicionarContato(novoContato, &listaContatos)
-			} else {
-                fmt.Println("Número máximo de contatos atingido.")
-            }
+		if listaContatos[4] == nil {
+			var nome, email string
+			fmt.Print("Digite o nome do contato: ")
+			fmt.Scanln(&nome)
+			fmt.Print("Digite o e-mail do contato: ")
+			fmt.Scanln(&email)
+	
+			novoContato := &Contato{
+				nome:  nome,
+				email: email,
+			}
+	
+			adicionarContato(novoContato, &listaContatos)
+		} else {
+	                fmt.Println("Número máximo de contatos atingido.")
+	        }
 
         case 2:
             excluirContato(&listaContatos)
