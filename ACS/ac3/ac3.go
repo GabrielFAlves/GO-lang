@@ -3,91 +3,90 @@ package main
 import "fmt"
 
 type Contato struct {
-	nome string
-	email string
+    nome  string
+    email string
 }
 
-func (c *Contato) AlterarEmail(novoEmail string){
-	c.email = novoEmail
+func (c *Contato) AlterarEmail(novoEmail string) {
+    c.email = novoEmail
 }
 
-func adicionarContato(contato Contato, listaContatos []*Contato) {
-	for i, c := range listaContatos {
-		if c == nil {
-			listaContatos[i] = &contato
-			fmt.Println("Contato adicionado com sucesso!")
-			return
-		}
-	}
-	fmt.Println("O array de contatos está cheio. Não foi possível adicionar o contato.")
+func adicionarContato(contato *Contato, listaContatos *[5]*Contato) {
+    for i, c := range listaContatos {
+        if c == nil {
+            listaContatos[i] = contato
+            fmt.Println("Contato adicionado com sucesso!")
+            return
+        }
+    }
+    fmt.Println("O array de contatos está cheio. Não foi possível adicionar o contato.")
 }
 
-func excluirContato(listaContatos []*Contato) {
-	for i := len(listaContatos) - 1; i >= 0; i-- {
-		if listaContatos[i] != nil {
-			listaContatos[i] = nil
-			fmt.Println("Contato excluído com sucesso!")
-			return
-		}
-	}
-	fmt.Println("Não há contatos para excluir.")
+func excluirContato(listaContatos *[5]*Contato) {
+    for i := len(listaContatos) - 1; i >= 0; i-- {
+        if listaContatos[i] != nil {
+            listaContatos[i] = nil
+            fmt.Println("Contato excluído com sucesso!")
+            return
+        }
+    }
+    fmt.Println("Não há contatos para excluir.")
 }
 
-// Função para listar os contatos cadastrados
-func listarContatos(listaContatos []*Contato) {
-	fmt.Println("\nLista de Contatos:")
-	for i := 0; i < len(listaContatos); i++ {
-		contato := listaContatos[i]
-		if contato != nil {
-			fmt.Println("Nome:", contato.nome, "- Email:", contato.email)
-		}
-	}
+func listarContatos(listaContatos *[5]*Contato) {
+    fmt.Println("\nLista de Contatos:")
+    for _, contato := range listaContatos {
+        if contato != nil {
+            fmt.Println("Nome:", contato.nome, "- Email:", contato.email)
+        }
+    }
 }
-
 
 func main() {
-	listaContatos := make([]*Contato, 5)
+    listaContatos := [5]*Contato{}
 
-	for {
-		fmt.Println("\nOpções:")
-		fmt.Println("1. Adicionar Contato")
-		fmt.Println("2. Excluir Último Contato")
-		fmt.Println("3. Sair")
-		fmt.Println("4. para visualizar contatos")
-		fmt.Print("Escolha uma opção: ")
+    for {
+        fmt.Println("\nOpções:")
+        fmt.Println("1. Adicionar Contato")
+        fmt.Println("2. Excluir Último Contato")
+        fmt.Println("3. Listar Contatos")
+        fmt.Println("4. Sair")
+        fmt.Print("Escolha uma opção: ")
 
-		var opcao int
-		fmt.Scanln(&opcao)
+        var opcao int
+        fmt.Scanln(&opcao)
 
-		switch opcao {
-		case 1:
-			var nome, email string
-			fmt.Print("Digite o nome do contato: ")
-			fmt.Scanln(&nome)
-			fmt.Print("Digite o e-mail do contato: ")
-			fmt.Scanln(&email)
+        switch opcao {
+        case 1:
+			if listaContatos[4] == nil {
+				var nome, email string
+				fmt.Print("Digite o nome do contato: ")
+				fmt.Scanln(&nome)
+				fmt.Print("Digite o e-mail do contato: ")
+				fmt.Scanln(&email)
 
-			novoContato := Contato{
-				nome:  nome,
-				email: email,
-			}
+				novoContato := &Contato{
+					nome:  nome,
+					email: email,
+				}
 
-			adicionarContato(novoContato, listaContatos)
+				adicionarContato(novoContato, &listaContatos)
+			} else {
+                fmt.Println("Número máximo de contatos atingido.")
+            }
 
-		case 2:
-			excluirContato(listaContatos)
+        case 2:
+            excluirContato(&listaContatos)
 
-		case 3:
-			fmt.Println("Saindo...")
-			return
+        case 3:
+            listarContatos(&listaContatos)
 
-		case 4:
-			listarContatos(listaContatos)
+        case 4:
+            fmt.Println("Saindo...")
+            return
 
-		default:
-			fmt.Println("Opção inválida. Por favor, escolha uma opção válida.")
-		}
-	}
+        default:
+            fmt.Println("Opção inválida. Por favor, escolha uma opção válida.")
+        }
+    }
 }
-
-
